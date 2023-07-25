@@ -11,7 +11,8 @@ def auto_heal():
         healthBarLocation = pg.locateOnScreen('imgs\healthbar.png')
         healthBar = pg.screenshot(region=(healthBarLocation.left, healthBarLocation.top, healthBarLocation.width + 60, healthBarLocation.height))
         healthStatus = pt.image_to_string(healthBar)
-        print(f"Sua vida é {healthStatus}")
+        if(HealthStatus < 280):
+            keyboard.release('F1')
         time.sleep(0.5)
 
 
