@@ -52,15 +52,15 @@ with dpg.window(tag="Primary Window"):
                 dpg.add_text("Autohur:")
                 dpg.add_combo(tag="hotkey_haste", items=hotkeys, width=45, default_value=hotkeys[11])
 
-    with dpg.group(): #Cavebot
-        dpg.add_text("Cavebot:", bullet=True)
+    with dpg.group(): #Keyboard Cavebot
+        dpg.add_text("Keyboard Cavebot:", bullet=True)
         with dpg.group(indent=25):
             with dpg.group(horizontal=True): #Start
-                dpg.add_button(label="Start", callback=threading.Thread(target=hunt, args=("start",)).start)
-                dpg.add_button(label="Stop", callback=stop_cavebot)
+                dpg.add_button(label="Start", callback=threading.Thread(target=hunt, args=("start",)).start, width=50)
+                dpg.add_button(label="Stop", callback=stop_cavebot, width=50)
             with dpg.group(horizontal=True): #Load and Record
-                dpg.add_button(label="Load", callback=lambda: dpg.show_item("file_dialog_id"))
-                dpg.add_button(label="Record", callback=lambda: dpg.configure_item("record_dialog_file", show=True))
+                dpg.add_button(label="Load", callback=lambda: dpg.show_item("file_dialog_id"), width=50)
+                dpg.add_button(label="Record", callback=lambda: dpg.configure_item("record_dialog_file", show=True), width=50)
                 
                 with dpg.popup(dpg.last_item(), mousebutton=dpg.mvMouseButton_Left, modal=True, tag="record_dialog_file"):
                         dpg.add_text("Write the name of your file:")
@@ -68,6 +68,8 @@ with dpg.window(tag="Primary Window"):
                         with dpg.group(horizontal=True): #Ok/Cancel group
                             dpg.add_button(label="Ok", callback=threading.Thread(target=record_file, args=("record",)).start)
                             dpg.add_button(label="Cancel", callback=lambda: dpg.configure_item("record_dialog_file", show=False))
+            with dpg.group(horizontal=True): #Instructions
+                dpg.add_button(label="Instructions", width=108)
                 
 dpg.setup_dearpygui()
 dpg.show_viewport()

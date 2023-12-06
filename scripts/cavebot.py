@@ -42,19 +42,21 @@ def hunt(sender):
         if 'tibia' in GetWindowText(GetForegroundWindow()).lower(): #Check if tibia is open
                 i = 0
                 while i != len(hunt):
-                    #and (keyboard.is_pressed("ESC") == False and stop_hunt.get() == False)
                     try:
-                        pg.locateOnScreen('imgs/battlelistEmpty.png', confidence=0.9)
-                        if hunt[i] == "w":
-                            pg.press("Up")
-                        elif hunt[i] == "a":
-                            pg.press("Left")
-                        elif hunt[i] == "s":
-                            pg.press("Down")
-                        elif hunt[i] == "d":
-                            pg.press("Right")
-                        i += 1
-                        time.sleep(0.2)
+                        if keyboard.is_pressed('ESC') or stop_hunt.get(): #Stop hunting
+                            break
+                        else:
+                            pg.locateOnScreen('imgs/battlelistEmpty.png', confidence=0.9)
+                            if hunt[i] == "w":
+                                pg.press("Up")
+                            elif hunt[i] == "a":
+                                pg.press("Left")
+                            elif hunt[i] == "s":
+                                pg.press("Down")
+                            elif hunt[i] == "d":
+                                pg.press("Right")
+                            i += 1
+                            time.sleep(0.1)
                     except pg.ImageNotFoundException:
                         pass
 
@@ -71,10 +73,13 @@ def record_file(sender):
         if 'tibia' in GetWindowText(GetForegroundWindow()).lower(): #Check if tibia is open
             if keyboard.is_pressed("Up") or keyboard.is_pressed("W"):
                 file.write("w")
+                keyboard.wait('g')
             elif keyboard.is_pressed("Left") or keyboard.is_pressed("A"):
                 file.write("a")
+                keyboard.wait('g')
             elif keyboard.is_pressed("Right") or keyboard.is_pressed("D"):
                 file.write("d")
+                keyboard.wait('g')
             elif keyboard.is_pressed("Down") or keyboard.is_pressed("S"):
                 file.write("s")
-            time.sleep(0.3)    
+                keyboard.wait('g')    
