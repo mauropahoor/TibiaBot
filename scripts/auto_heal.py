@@ -7,44 +7,46 @@ import time
 import numpy as np
 #pip install numpy
 import dearpygui.dearpygui as dpg
+from win32gui import GetWindowText, GetForegroundWindow
 
 def auto_heal(sender):
     healthBar = pg.locateOnScreen('imgs\healthbar.png', confidence=0.9)
     i = 0
 
     while keyboard.is_pressed('ESC') == False:
-        percentageHeal = int(dpg.get_value('heal_value')) #Get the heal percentage from the input
-        percentageMana = int(dpg.get_value('mana_value')) #Get the mana percentage from the input
+        if 'tibia' in GetWindowText(GetForegroundWindow()).lower(): #Check if tibia is open
+            percentageHeal = int(dpg.get_value('heal_value')) #Get the heal percentage from the input
+            percentageMana = int(dpg.get_value('mana_value')) #Get the mana percentage from the input
 
-        hotkeyHealth = dpg.get_value('hotkey_health') #Get the hotkey to be used with health
-        hotkeyMana = dpg.get_value('hotkey_mana') #Get the hotkey to be used with mana
+            hotkeyHealth = dpg.get_value('hotkey_health') #Get the hotkey to be used with health
+            hotkeyMana = dpg.get_value('hotkey_mana') #Get the hotkey to be used with mana
 
-        try:
-            health = get_red_pixels(pg.screenshot(region=(int(healthBar.left), int(healthBar.top), int(healthBar.width), int(healthBar.height))))
-            mana = get_blue_pixels(pg.screenshot(region=(int(healthBar.left), int(healthBar.top + 13), int(healthBar.width), int(healthBar.height))))
-            
+            try:
+                health = get_red_pixels(pg.screenshot(region=(int(healthBar.left), int(healthBar.top), int(healthBar.width), int(healthBar.height))))
+                mana = get_blue_pixels(pg.screenshot(region=(int(healthBar.left), int(healthBar.top + 13), int(healthBar.width), int(healthBar.height))))
+                
 
-            if(i == 0): #Get the max value of the function
-                healthMax = health
-                manaMax = mana #mana <= ((manaMax-42)/100) * percentageHeal + 42
-                i += 1
-            #print(f"Vida {red}\nCalculo: {((redMax-33)/100) * percentageHeal + 33}")
-            if(health <= ((healthMax-33)/100) * percentageHeal + 33): #Convert the percentage of healing to the pixels scale (0% --> 33 and 100% --> redMax)
-                pg.press(f'{hotkeyHealth}') #Use healing spell
-            if(mana <= ((manaMax-42)/100) * percentageMana + 42):
-                pg.press(f'{hotkeyMana}')
-            time.sleep(1)
-        except pg.ImageNotFoundException:
-            healthBar = pg.locateOnScreen('imgs\healthbar.png', confidence=0.9)
-            
-        #if(healthBar is None): #Check if your health is not full
-        #    print("vida nao cheia")
-        #    if(manaBar is None): #Check if your mana isn't empty
-        #        keyboard.press('F1') #Use healing spell
-        #    else:
-        #        keyboard.press('F2') #Use mana potion
-        #        keyboard.press('F1') #Use healing spell
-        #Script para healar a vida basico.
+                if(i == 0): #Get the max value of the function
+                    healthMax = health
+                    manaMax = mana #mana <= ((manaMax-42)/100) * percentageHeal + 42
+                    i += 1
+                #print(f"Vida {red}\nCalculo: {((redMax-33)/100) * percentageHeal + 33}")
+                if(health <= ((healthMax-33)/100) * percentageHeal + 33): #Convert the percentage of healing to the pixels scale (0% --> 33 and 100% --> redMax)
+                    pg.press(f'{hotkeyHealth}') #Use healing spell
+                if(mana <= ((manaMax-42)/100) * percentageMana + 42):
+                    pg.press(f'{hotkeyMana}')
+                time.sleep(1)
+            except pg.ImageNotFoundException:
+                healthBar = pg.locateOnScreen('imgs\healthbar.png', confidence=0.9)
+                
+            #if(healthBar is None): #Check if your health is not full
+            #    print("vida nao cheia")
+            #    if(manaBar is None): #Check if your mana isn't empty
+            #        keyboard.press('F1') #Use healing spell
+            #    else:
+            #        keyboard.press('F2') #Use mana potion
+            #        keyboard.press('F1') #Use healing spell
+            #Script para healar a vida basico.
         
 def get_red_pixels(healthbar_screenshot):
     arr_list= np.array(healthbar_screenshot)

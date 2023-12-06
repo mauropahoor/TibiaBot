@@ -5,7 +5,6 @@ import dearpygui.dearpygui as dpg
 from win32gui import GetWindowText, GetForegroundWindow
 
 def auto_attack(sender):
-    print("ATTACK !")
     while dpg.get_value(sender):
         if 'tibia' in GetWindowText(GetForegroundWindow()).lower(): #Check if tibia is open
             try:
