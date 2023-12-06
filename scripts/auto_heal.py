@@ -8,7 +8,7 @@ import numpy as np
 #pip install numpy
 import dearpygui.dearpygui as dpg
 
-def auto_heal(sender, app_data):
+def auto_heal(sender):
     healthBar = pg.locateOnScreen('imgs\healthbar.png', confidence=0.9)
     i = 0
 
@@ -30,9 +30,9 @@ def auto_heal(sender, app_data):
                 i += 1
             #print(f"Vida {red}\nCalculo: {((redMax-33)/100) * percentageHeal + 33}")
             if(health <= ((healthMax-33)/100) * percentageHeal + 33): #Convert the percentage of healing to the pixels scale (0% --> 33 and 100% --> redMax)
-                keyboard.press(f'{hotkeyHealth}') #Use healing spell
+                pg.press(f'{hotkeyHealth}') #Use healing spell
             if(mana <= ((manaMax-42)/100) * percentageMana + 42):
-                keyboard.press(f'{hotkeyMana}')
+                pg.press(f'{hotkeyMana}')
             time.sleep(1)
         except pg.ImageNotFoundException:
             healthBar = pg.locateOnScreen('imgs\healthbar.png', confidence=0.9)
