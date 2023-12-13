@@ -3,6 +3,7 @@ import threading
 import string
 
 from scripts.auto_attack import auto_attack
+from scripts.auto_attack import auto_spell
 
 from scripts.auto_heal import auto_heal
 
@@ -15,7 +16,7 @@ from scripts.cavebot import record_file
 
 
 dpg.create_context()
-dpg.create_viewport(title='MauroBot', width=600, height=400)
+dpg.create_viewport(title='CamposBot', width=600, height=400)
 
 def get_file(sender, app_data):
     update_path(app_data['file_path_name']) #Update the path in cavebot to load the new hunt
@@ -47,6 +48,22 @@ with dpg.window(tag="Primary Window"):
             with dpg.group(horizontal=True): #Auto Attack Group
                 dpg.add_checkbox(tag="auto_attack", callback=threading.Thread(target=auto_attack, args=("auto_attack",)).start)
                 dpg.add_text("Auto attack")
+            with dpg.group(horizontal=True): #Auto Spell Group
+                #Attack spell name + cooldown
+                spells = {
+                    "select cooldown": 2,
+                    "sd/gfb/ava (2 seconds cooldown)": 2,
+                    "exori (frigo/vis/tera/flam) (2 seconds cooldown)": 2,
+                    "exori (4 seconds cooldown)": 4,
+                    "exori gran (6 seconds cooldown)": 6,
+                    "exevo vis hur (8 seconds cooldown)": 6,
+                    "exori gran ico (30 seconds cooldown)": 30,
+                    "exevo gran mas flam (40 seconds cooldown)": 40
+                }
+                dpg.add_checkbox(tag="auto_spell", callback=threading.Thread(target=auto_spell, args=("auto_spell", spells)).start)
+                dpg.add_text("Auto spell:")
+                dpg.add_combo(tag="hotkey_spell", items=hotkeys, width=45, default_value=hotkeys[2])
+                dpg.add_combo(tag="name_spell", items=list(spells.keys()), width=130, default_value=list(spells.keys())[0])
             with dpg.group(horizontal=True): #AutoHur Group
                 dpg.add_checkbox(tag="auto_hur", callback=threading.Thread(target=auto_haste, args=("auto_hur",)).start)
                 dpg.add_text("Autohur:")
