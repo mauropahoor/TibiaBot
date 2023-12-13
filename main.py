@@ -40,7 +40,20 @@ with dpg.window(tag="Primary Window"):
                 dpg.add_input_text(tag="mana_value", default_value=50, width=25)
                 dpg.add_text("%")
                 dpg.add_combo(tag="hotkey_mana", items=hotkeys, width=45, default_value=hotkeys[1])
-            dpg.add_button(label="Activate", callback=threading.Thread(target=auto_heal, args=("auto_heal",)).start) #Use threads to run more than 1 function at the same time
+            dpg.add_button(label="Activate", callback=lambda: dpg.configure_item("autoheal_check_dialog", show=True))
+            with dpg.popup(dpg.last_item(), mousebutton=dpg.mvMouseButton_Left, modal=True, tag="autoheal_check_dialog"):
+                with dpg.texture_registry(show=False):
+                    width, height, channels, data = dpg.load_image("imgs/healthbar.png")
+                    dpg.add_static_texture(width=width, height=height, default_value=data, tag="health_image")
+                with dpg.texture_registry(show=False):
+                    width, height, channels, data = dpg.load_image("imgs/manabar.png")
+                    dpg.add_static_texture(width=width, height=height, default_value=data, tag="mana_image")
+                
+                dpg.add_image("health_image")
+                dpg.add_image("mana_image")
+                dpg.add_text("Be sure that your health/mana bar is active\nand both health and mana are full when you click the Ok button!")
+                with dpg.group(horizontal=True):
+                    dpg.add_button(label="Ok", callback=threading.Thread(target=auto_heal, args=("auto_heal",)).start) #Use threads to run more than 1 function at the same time
 
     with dpg.group(): #Utility group
         dpg.add_text("Utility:", bullet=True)
