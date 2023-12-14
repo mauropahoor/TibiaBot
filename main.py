@@ -4,8 +4,11 @@ import string
 
 from scripts.auto_attack import auto_attack
 from scripts.auto_attack import auto_spell
+from scripts.auto_loot import auto_loot
 
 from scripts.auto_heal import auto_heal
+
+from scripts.auto_eat import auto_eat
 
 from scripts.auto_haste import auto_haste
 
@@ -77,11 +80,17 @@ with dpg.window(tag="Primary Window"):
                 dpg.add_text("Auto spell:")
                 dpg.add_combo(tag="hotkey_spell", items=hotkeys, width=45, default_value=hotkeys[2])
                 dpg.add_combo(tag="name_spell", items=list(spells.keys()), width=130, default_value=list(spells.keys())[0])
-            with dpg.group(horizontal=True): #AutoHur Group
+            with dpg.group(horizontal=True): #Auto Eat Group
+                dpg.add_checkbox(tag="auto_eat", callback=threading.Thread(target=auto_eat, args=("auto_eat",)).start)
+                dpg.add_text("Auto eat:")
+                dpg.add_combo(tag="hotkey_eat", items=hotkeys, width=45, default_value=hotkeys[9])
+            with dpg.group(horizontal=True): #Auto Hur Group
                 dpg.add_checkbox(tag="auto_hur", callback=threading.Thread(target=auto_haste, args=("auto_hur",)).start)
-                dpg.add_text("Autohur:")
+                dpg.add_text("Auto hur:")
                 dpg.add_combo(tag="hotkey_haste", items=hotkeys, width=45, default_value=hotkeys[11])
-
+            with dpg.group(horizontal=True): #Auto Loot Group
+                dpg.add_checkbox(tag="auto_loot", callback=threading.Thread(target=auto_loot, args=("auto_loot",)).start)
+                dpg.add_text("Auto loot")
     with dpg.group(): #Keyboard Cavebot
         dpg.add_text("Keyboard Cavebot:", bullet=True)
         with dpg.group(indent=25):

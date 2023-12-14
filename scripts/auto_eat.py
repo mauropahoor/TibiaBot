@@ -4,11 +4,12 @@ import time
 import dearpygui.dearpygui as dpg
 from win32gui import GetWindowText, GetForegroundWindow
 
-def auto_haste(sender):
+def auto_eat(sender):
     while dpg.get_value(sender):
         if 'tibia' in GetWindowText(GetForegroundWindow()).lower(): #Check if tibia is open
             try:
-                pg.locateOnScreen('imgs/haste.png', confidence=0.9)
+                pg.locateOnScreen('imgs/hungry.png', confidence=0.9) #If hungry is active, eat, else wait
+                pg.press(dpg.get_value('hotkey_eat'))
             except pg.ImageNotFoundException:
-                pg.press(dpg.get_value('hotkey_haste'))
-            time.sleep(0.15)
+                pass
+            time.sleep(0.5)

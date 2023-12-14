@@ -10,6 +10,7 @@ import dearpygui.dearpygui as dpg
 from win32gui import GetWindowText, GetForegroundWindow
 
 def auto_heal(sender):
+    dpg.configure_item("autoheal_check_dialog", show=False)
     healthBar = pg.locateOnScreen('imgs\healthbar.png', confidence=0.9)
     i = 0
 
