@@ -8,7 +8,7 @@ def auto_haste(sender):
     while dpg.get_value(sender):
         if 'tibia' in GetWindowText(GetForegroundWindow()).lower(): #Check if tibia is open
             try:
-                pg.locateOnScreen('imgs/haste.png', confidence=0.9)
+                pg.locateOnScreen('scripts/imgs/haste.png', confidence=0.9)
             except pg.ImageNotFoundException:
                 pg.press(dpg.get_value('hotkey_haste'))
             time.sleep(0.15)

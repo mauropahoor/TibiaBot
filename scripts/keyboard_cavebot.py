@@ -46,7 +46,7 @@ def hunt(sender):
                         if keyboard.is_pressed('ESC') or stop_hunt.get(): #Stop hunting
                             break
                         else:
-                            pg.locateOnScreen('imgs/battlelistEmpty.png', confidence=0.9)
+                            pg.locateOnScreen('scripts/imgs/battlelistEmpty.png', confidence=0.9)
                             if hunt[i] == "w":
                                 pg.press("Up")
                             elif hunt[i] == "a":

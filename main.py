@@ -12,14 +12,15 @@ from scripts.auto_eat import auto_eat
 
 from scripts.auto_haste import auto_haste
 
-from scripts.cavebot import hunt
-from scripts.cavebot import stop_cavebot
-from scripts.cavebot import update_path
-from scripts.cavebot import record_file
+from scripts.keyboard_cavebot import hunt
+from scripts.keyboard_cavebot import stop_cavebot
+from scripts.keyboard_cavebot import update_path
+from scripts.keyboard_cavebot import record_file
 
+from scripts.mark_cavebot import start_hunt
 
 dpg.create_context()
-dpg.create_viewport(title='CamposBot', width=600, height=400)
+dpg.create_viewport(title='CamposBot', width=500, height=600)
 
 def get_file(sender, app_data):
     update_path(app_data['file_path_name']) #Update the path in cavebot to load the new hunt
@@ -46,10 +47,10 @@ with dpg.window(tag="Primary Window"):
             dpg.add_button(label="Activate", callback=lambda: dpg.configure_item("autoheal_check_dialog", show=True))
             with dpg.popup(dpg.last_item(), mousebutton=dpg.mvMouseButton_Left, modal=True, tag="autoheal_check_dialog"):
                 with dpg.texture_registry(show=False):
-                    width, height, channels, data = dpg.load_image("imgs/healthbar.png")
+                    width, height, channels, data = dpg.load_image("scripts/imgs/healthbar.png")
                     dpg.add_static_texture(width=width, height=height, default_value=data, tag="health_image")
                 with dpg.texture_registry(show=False):
-                    width, height, channels, data = dpg.load_image("imgs/manabar.png")
+                    width, height, channels, data = dpg.load_image("scripts/imgs/manabar.png")
                     dpg.add_static_texture(width=width, height=height, default_value=data, tag="mana_image")
                 
                 dpg.add_image("health_image")
@@ -89,13 +90,21 @@ with dpg.window(tag="Primary Window"):
                 dpg.add_text("Auto hur:")
                 dpg.add_combo(tag="hotkey_haste", items=hotkeys, width=45, default_value=hotkeys[11])
             with dpg.group(horizontal=True): #Auto Loot Group
-                dpg.add_checkbox(tag="auto_loot", callback=threading.Thread(target=auto_loot, args=("auto_loot",)).start)
+                dpg.add_checkbox(tag="auto_loot", callback=lambda: dpg.configure_item("autoloot_check_dialog", show=True))
                 dpg.add_text("Auto loot")
+                with dpg.popup(dpg.last_item(), mousebutton=dpg.mvMouseButton_Left, modal=True, tag="autoloot_check_dialog"):
+                    with dpg.texture_registry(show=False):
+                        width, height, channels, data = dpg.load_image("scripts/imgs/autolootTutorial.png")
+                        dpg.add_static_texture(width=width, height=height, default_value=data, tag="tutorial_image")
+                    dpg.add_image("tutorial_image")
+                    dpg.add_text("Put your mouse pointer on your character and\npress CTRL button to activate autoloot!")
+                    with dpg.group(horizontal=True):
+                        dpg.add_button(label="Ok", callback=threading.Thread(target=auto_loot, args=("auto_loot",)).start)
     with dpg.group(): #Keyboard Cavebot
         dpg.add_text("Keyboard Cavebot:", bullet=True)
         with dpg.group(indent=25):
             with dpg.group(horizontal=True): #Start
-                dpg.add_button(label="Start", callback=threading.Thread(target=hunt, args=("start",)).start, width=50)
+                dpg.add_button(label="Start", callback=threading.Thread(target=hunt, args=("start_keyboard",)).start, width=50)
                 dpg.add_button(label="Stop", callback=stop_cavebot, width=50)
             with dpg.group(horizontal=True): #Load and Record
                 dpg.add_button(label="Load", callback=lambda: dpg.show_item("file_dialog_id"), width=50)
@@ -109,6 +118,14 @@ with dpg.window(tag="Primary Window"):
                             dpg.add_button(label="Cancel", callback=lambda: dpg.configure_item("record_dialog_file", show=False))
             with dpg.group(horizontal=True): #Instructions
                 dpg.add_button(label="Instructions", width=108)
+    with dpg.group(): #Mark Cavebot
+            dpg.add_text("Mark Cavebot:", bullet=True)
+            with dpg.group(indent=25):
+                with dpg.group(horizontal=True): #Start
+                    dpg.add_button(label="Start", callback=threading.Thread(target=start_hunt, args=("start_markup",)).start, width=50)
+                    dpg.add_button(label="Stop", callback=stop_cavebot, width=50)
+                with dpg.group(horizontal=True): #Instructions
+                    dpg.add_button(label="Instructions", width=108)
                 
 dpg.setup_dearpygui()
 dpg.show_viewport()

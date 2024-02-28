@@ -11,7 +11,7 @@ from win32gui import GetWindowText, GetForegroundWindow
 
 def auto_heal(sender):
     dpg.configure_item("autoheal_check_dialog", show=False)
-    healthBar = pg.locateOnScreen('imgs\healthbar.png', confidence=0.9)
+    healthBar = pg.locateOnScreen('scripts\imgs\healthbar.png', confidence=0.9)
     i = 0
 
     while keyboard.is_pressed('ESC') == False:
@@ -38,7 +38,7 @@ def auto_heal(sender):
                     pg.press(f'{hotkeyMana}')
                 time.sleep(1)
             except pg.ImageNotFoundException:
-                healthBar = pg.locateOnScreen('imgs\healthbar.png', confidence=0.9)
+                healthBar = pg.locateOnScreen('scripts\imgs\healthbar.png', confidence=0.9)
                 
             #if(healthBar is None): #Check if your health is not full
             #    print("vida nao cheia")
@@ -69,4 +69,4 @@ def get_blue_pixels(manabar_screenshot):
             g=g+item[1]
             b=b+item[2]  
     total=r+g+b
-    return b/total*100 #Get blue percentage of the pixels (life amount)
+    return b/total*100 #Get blue percentage of the pixels (mana amount)
