@@ -1,6 +1,5 @@
 import dearpygui.dearpygui as dpg
 import threading
-import string
 
 from scripts.auto_attack import auto_attack
 from scripts.auto_attack import auto_spell

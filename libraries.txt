@@ -1,0 +1,4 @@
+dearpygui
+pyautogui
+numpy
+keyboard
