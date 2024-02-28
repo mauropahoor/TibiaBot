@@ -57,13 +57,13 @@ with dpg.window(tag="Primary Window"):
                 dpg.add_image("mana_image")
                 dpg.add_text("Be sure that your health/mana bar is active\nand both health and mana are full when you click the Ok button!")
                 with dpg.group(horizontal=True):
-                    dpg.add_button(label="Ok", callback=threading.Thread(target=auto_heal, args=("auto_heal",)).start) #Use threads to run more than 1 function at the same time
+                    dpg.add_button(label="Ok", callback=lambda: threading.Thread(target=auto_heal, args=("auto_heal",)).start()) #Use threads to run more than 1 function at the same time
 
     with dpg.group(): #Utility group
         dpg.add_text("Utility:", bullet=True)
         with dpg.group(indent=25):
             with dpg.group(horizontal=True): #Auto Attack Group
-                dpg.add_checkbox(tag="auto_attack", callback=threading.Thread(target=auto_attack, args=("auto_attack",)).start)
+                dpg.add_checkbox(tag="auto_attack", callback=lambda: threading.Thread(target=auto_attack, args=("auto_attack",)).start())
                 dpg.add_text("Auto attack")
             with dpg.group(horizontal=True): #Auto Spell Group
                 #Attack spell name + cooldown
@@ -77,16 +77,16 @@ with dpg.window(tag="Primary Window"):
                     "exori gran ico (30 seconds cooldown)": 30,
                     "exevo gran mas flam (40 seconds cooldown)": 40
                 }
-                dpg.add_checkbox(tag="auto_spell", callback=threading.Thread(target=auto_spell, args=("auto_spell", spells)).start)
+                dpg.add_checkbox(tag="auto_spell", callback=lambda: threading.Thread(target=auto_spell, args=("auto_spell", spells)).start())
                 dpg.add_text("Auto spell:")
                 dpg.add_combo(tag="hotkey_spell", items=hotkeys, width=45, default_value=hotkeys[2])
                 dpg.add_combo(tag="name_spell", items=list(spells.keys()), width=130, default_value=list(spells.keys())[0])
             with dpg.group(horizontal=True): #Auto Eat Group
-                dpg.add_checkbox(tag="auto_eat", callback=threading.Thread(target=auto_eat, args=("auto_eat",)).start)
+                dpg.add_checkbox(tag="auto_eat", callback=lambda: threading.Thread(target=auto_eat, args=("auto_eat",)).start())
                 dpg.add_text("Auto eat:")
                 dpg.add_combo(tag="hotkey_eat", items=hotkeys, width=45, default_value=hotkeys[9])
             with dpg.group(horizontal=True): #Auto Hur Group
-                dpg.add_checkbox(tag="auto_hur", callback=threading.Thread(target=auto_haste, args=("auto_hur",)).start)
+                dpg.add_checkbox(tag="auto_hur", callback=lambda: threading.Thread(target=auto_haste, args=("auto_hur",)).start())
                 dpg.add_text("Auto hur:")
                 dpg.add_combo(tag="hotkey_haste", items=hotkeys, width=45, default_value=hotkeys[11])
             with dpg.group(horizontal=True): #Auto Loot Group
@@ -99,7 +99,7 @@ with dpg.window(tag="Primary Window"):
                     dpg.add_image("tutorial_image")
                     dpg.add_text("Put your mouse pointer on your character and\npress CTRL button to activate autoloot!")
                     with dpg.group(horizontal=True):
-                        dpg.add_button(label="Ok", callback=threading.Thread(target=auto_loot, args=("auto_loot",)).start)
+                        dpg.add_button(label="Ok", callback=lambda: threading.Thread(target=auto_loot, args=("auto_loot",)).start())
     with dpg.group(): #Keyboard Cavebot
         dpg.add_text("Keyboard Cavebot:", bullet=True)
         with dpg.group(indent=25):
@@ -122,7 +122,7 @@ with dpg.window(tag="Primary Window"):
             dpg.add_text("Mark Cavebot:", bullet=True)
             with dpg.group(indent=25):
                 with dpg.group(horizontal=True): #Start
-                    dpg.add_button(label="Start", callback=threading.Thread(target=start_hunt, args=("start_markup",)).start, width=50)
+                    dpg.add_button(label="Start", callback=lambda: threading.Thread(target=start_hunt, args=("start_markup",)).start(), width=50)
                     dpg.add_button(label="Stop", callback=stop_cavebot, width=50)
                 with dpg.group(horizontal=True): #Instructions
                     dpg.add_button(label="Instructions", width=108)
