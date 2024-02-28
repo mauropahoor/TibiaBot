@@ -1,4 +1,6 @@
-<h1>Tibia bot</h1>
+<h1>Tibia bot (Beta)</h1>
+<b>Some functions still not 100% and may have some bugs!</b>
+
 This program aims to automate functions in the Tibia game, such as: <br>
 <ul>
   <li>Autoloot</li>
