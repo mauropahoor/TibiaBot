@@ -89,7 +89,11 @@ with dpg.window(tag="Primary Window"):
                 dpg.add_text("Auto hur:")
                 dpg.add_combo(tag="hotkey_haste", items=hotkeys, width=45, default_value=hotkeys[11])
             with dpg.group(horizontal=True): #Auto Loot Group
-                dpg.add_checkbox(tag="auto_loot", callback=lambda: dpg.configure_item("autoloot_check_dialog", show=True))
+                def checkbox_Test ():
+                    if dpg.get_value("auto_loot") == True: #Show dialog only when activate the checkbox
+                        dpg.configure_item("autoloot_check_dialog", show=True)
+
+                dpg.add_checkbox(tag="auto_loot", callback=checkbox_Test)
                 dpg.add_text("Auto loot")
                 with dpg.popup(dpg.last_item(), mousebutton=dpg.mvMouseButton_Left, modal=True, tag="autoloot_check_dialog"):
                     with dpg.texture_registry(show=False):
